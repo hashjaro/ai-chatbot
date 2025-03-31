@@ -3,32 +3,96 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
-  --radius: 0.5rem;
-}
-
-* {
-  @apply border-border;
+  --background: #1a1a2e;
+  --foreground: #e0e0e0;
+  --primary: #00abe4;
+  --secondary: #16213e;
+  --accent: #ff78ac;
 }
 
 body {
-  @apply bg-background text-foreground;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: var(--primary);
+}
+
+.chat-container {
+  background-color: var(--secondary);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chat-message {
+  background-color: var(--background);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.chat-message.user {
+  background-color: var(--primary);
+  color: var(--background);
+  text-align: right;
+}
+
+.chat-message.assistant {
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+.chat-input {
+  background-color: var(--foreground);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  padding: 10px;
+  color: var(--background);
+}
+
+button {
+  background-color: var(--primary);
+  color: var(--background);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--accent);
+}
+
+.side-menu {
+  background-color: var(--secondary);
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.side-menu button {
+  margin: 10px 0;
+}
+
+.session-item {
+  background-color: var(--background);
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.session-item:hover {
+  background-color: var(--primary);
 }
