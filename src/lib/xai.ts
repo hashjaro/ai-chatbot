@@ -2,11 +2,11 @@ import { Message } from '@/types';
 
 export async function getAIResponse(messages: Message[]): Promise<string> {
   const apiKey = process.env.XAI_API_KEY;
+  console.log('Attempting to read XAI_API_KEY:', apiKey); // Log the API key (for debugging; remove in production)
+
   if (!apiKey) {
     throw new Error('XAI_API_KEY is not set in environment variables');
   }
-
-  console.log('xAI API Key:', apiKey); // Log the API key (for debugging; remove in production)
 
   try {
     const response = await fetch('https://api.x.ai/v1/chat/completions', {
@@ -16,7 +16,7 @@ export async function getAIResponse(messages: Message[]): Promise<string> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'grok-2-1212',
+        model: 'grok',
         messages: messages.map((msg) => ({
           role: msg.role,
           content: msg.content,
@@ -37,6 +37,6 @@ export async function getAIResponse(messages: Message[]): Promise<string> {
     return data.choices[0].message.content;
   } catch (error) {
     console.error('xAI API error:', error);
-    throw error; // Re-throw the error to be caught in handleSendMessage
+    throw error;
   }
 }
