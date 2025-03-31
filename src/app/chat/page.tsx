@@ -10,6 +10,8 @@ import { getAIResponse } from '@/lib/xai';
 import { saveMessage, saveSession, getSessionMessages } from '@/lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 
+export const dynamic = 'force-dynamic';
+
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [sessionId, setSessionId] = useState<string>('');
