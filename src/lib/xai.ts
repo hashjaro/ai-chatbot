@@ -1,7 +1,7 @@
 import { Message } from '@/types';
 
 export async function getAIResponse(messages: Message[]): Promise<string> {
-  const apiKey = process.env.XAI_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_XAI_API_KEY;
   console.log('Attempting to read XAI_API_KEY:', apiKey); // Log the API key (for debugging; remove in production)
 
   if (!apiKey) {
