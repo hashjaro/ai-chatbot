@@ -16,7 +16,7 @@ export async function getAIResponse(messages: Message[]): Promise<string> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'grok',
+        model: 'grok-2-1212',
         messages: messages.map((msg) => ({
           role: msg.role,
           content: msg.content,
