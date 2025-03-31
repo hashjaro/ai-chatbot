@@ -20,11 +20,9 @@ export default function ChatPage() {
     const id = searchParams.get('sessionId') || uuidv4();
     setSessionId(id);
 
-    const loadMessages = async () => {
-      const savedMessages = await getSessionMessages(id);
-      if (savedMessages.length > 0) {
-        setMessages(savedMessages);
-      } else {
+    const loadSession = async () => {
+      try {
+        // Always save the session to ensure it exists
         const newSession: ChatSession = {
           id,
           title: 'New Chat',
@@ -32,10 +30,19 @@ export default function ChatPage() {
           messages: [],
         };
         await saveSession(newSession);
+
+        // Load existing messages
+        const savedMessages = await getSessionMessages(id);
+        if (savedMessages.length > 0) {
+          setMessages(savedMessages);
+        }
+      } catch (error) {
+        console.error('Error loading session or messages:', error);
+        // Optionally redirect to an error page or show a message to the user
       }
     };
 
-    loadMessages();
+    loadSession();
   }, [searchParams]);
 
   const handleSendMessage = async (content: string) => {
@@ -43,10 +50,20 @@ export default function ChatPage() {
     setMessages((prev) => [...prev, userMessage]);
     await saveMessage(sessionId, userMessage);
 
-    const aiResponse = await getAIResponse([...messages, userMessage]);
-    const aiMessage = createNewMessage('assistant', aiResponse);
-    setMessages((prev) => [...prev, aiMessage]);
-    await saveMessage(sessionId, aiMessage);
+    try {
+      const aiResponse = await getAIResponse([...messages, userMessage]);
+      const aiMessage = createNewMessage('assistant', aiResponse);
+      setMessages((prev) => [...prev, aiMessage]);
+      await saveMessage(sessionId, aiMessage);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      const errorMessage = createNewMessage(
+        'assistant',
+        "I'm sorry, I couldn't process your request at the moment. Please try again later."
+      );
+      setMessages((prev) => [...prev, errorMessage]);
+      await saveMessage(sessionId, errorMessage);
+    }
   };
 
   return (
